@@ -15,7 +15,19 @@ return function (App $app) {
     });
 
     $app->get('/', function (Request $request, Response $response) {
-        $response->getBody()->write('Hello world!');
+        $link = mysqli_connect("localhost","root","","bulletin-board");
+        //$result = mysqli_query($link,'SELECT*FROM board');
+        return $response;
+    });
+
+    $app->post('/api', function (Request $request, Response $response) {
+        $params = $request->getQueryParams();
+        $link = mysqli_connect("localhost","root","","bulletin-board");
+        $stmt = mysqli_prepare($link,"INSERT INTO board(name,messages) VALUES(?,?)");
+        mysqli_stmt_bind_param($stmt, "ss", $params["name"], $params["messages"]);
+        $result = mysqli_stmt_execute($stmt);
+        mysqli_close($link);
+        $response->getBody()->write($result);
         return $response;
     });
 

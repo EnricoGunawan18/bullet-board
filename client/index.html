@@ -15,13 +15,13 @@
     <form class="bulletin">
         <div class="name">
             <p>ニックネーム :</p>
-            <input type="text" class="nickname">
+            <textarea cols="30" rows="10" class="nickname"></textarea>
         </div>
         <div class="text">
             <p>本文 :</p>
-            <input type="text" class="message">
+            <textarea cols="50" rows="10" class="message"></textarea>
         </div>
-        <button type="button" class="post" id="btnAdd">投稿</button>
+        <button type="button" class="post" id="btnAdd" onclick="post()">投稿</button>
     </form>
 
     <hr>
@@ -31,8 +31,21 @@
     </div>
 
     <article class="list">
-        
+        <section class="box">
+            <p class="left">LEFT</p>
+            <section class="right">
+                <section class="button">
+                    <button type="button" class="edit" onclick="edit()">編集</button>
+                    <button type="button" class="delete" onclick="erase()">削除</button>
+                </section>
+                <p class="rightbottom">RIGHTBOTTOM</p>
+            </section>
+        </section>
     </article>
+
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
+    
+    <script src="js/main.js"></script>
 
 </body>
 </html>

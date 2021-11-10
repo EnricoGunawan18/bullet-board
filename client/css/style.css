@@ -15,6 +15,7 @@
 }
 
 .nickname{
+    margin-top: 15px;
     height: 20px;
 }
 
@@ -25,7 +26,9 @@
     margin: auto;
 }
 .message{
+    margin-top: 15px;
     height: 100px;
+    width: 400px;
 }
 
 .post{
@@ -33,5 +36,16 @@
     margin-top: 10px;
     width: 100px;
     height: 30px;
+}
+
+.box{
+    padding-top: 20px;
+    padding-right: 10px;
+    padding-left: 10px;
+    margin: auto;
+    border: 1px solid black;
+    width: 50%;
+    display: flex;
+    justify-content: space-between;
 }
 
