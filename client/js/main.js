@@ -12,6 +12,7 @@ function post(){
     //xhr.open("POST",url);
 
     //var data = {name:name,messages:message};
+    //data.send();
 
     xhr.send(data);
     alert(name);
