@@ -14,20 +14,55 @@ return function (App $app) {
         return $response;
     });
 
-    $app->get('/', function (Request $request, Response $response) {
+    $app->get('/api', function (Request $request, Response $response) {
         $link = mysqli_connect("localhost","root","","bulletin-board");
-        //$result = mysqli_query($link,'SELECT*FROM board');
+        $result = mysqli_query($link,'SELECT*FROM board');
+        $messages = mysqli_fetch_all($result);
+        mysqli_close($link);
+
+        $response->getBody()->write(json_encode($messages, JSON_UNESCAPED_UNICODE));
         return $response;
     });
 
     $app->post('/api', function (Request $request, Response $response) {
         $params = $request->getQueryParams();
+
         $link = mysqli_connect("localhost","root","","bulletin-board");
         $stmt = mysqli_prepare($link,"INSERT INTO board(name,messages) VALUES(?,?)");
         mysqli_stmt_bind_param($stmt, "ss", $params["name"], $params["messages"]);
         $result = mysqli_stmt_execute($stmt);
+        
         mysqli_close($link);
-        $response->getBody()->write($result);
+
+        $response->getBody()->write(json_encode($result, JSON_UNESCAPED_UNICODE));
+        return $response;
+    });
+
+    $app->put('/api', function (Request $request, Response $response) {
+        $params = $request->getQueryParams();
+
+        $link = mysqli_connect("localhost","root","","bulletin-board");
+        $stmt = mysqli_prepare($link,"UPDATE board set name = ?, messages = ? where id = ?");
+        mysqli_stmt_bind_param($stmt, "ssi", $params["name"], $params["messages"], $params["id"]);
+        $result = mysqli_stmt_execute($stmt);
+        
+        mysqli_close($link);
+        
+        $response->getBody()->write(json_encode($result, JSON_UNESCAPED_UNICODE));
+        return $response;
+    });
+
+    $app->delete('/api', function (Request $request, Response $response) {
+        $params = $request->getQueryParams();
+
+        $link = mysqli_connect("localhost","root","","bulletin-board");
+        $stmt = mysqli_prepare($link,"DELETE FROM board WHERE id = ?");
+        mysqli_stmt_bind_param($stmt, "i", $params["id"]);
+        $result = mysqli_stmt_execute($stmt);
+        
+        mysqli_close($link);
+        
+        $response->getBody()->write(json_encode($result, JSON_UNESCAPED_UNICODE));
         return $response;
     });
 
