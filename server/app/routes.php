@@ -14,7 +14,7 @@ return function (App $app) {
         return $response;
     });
 
-    $app->get('/api', function (Request $request, Response $response) {
+    $app->get('/api/page', function (Request $request, Response $response) {
         $link = mysqli_connect("localhost","root","","bulletin-board");
         $result = mysqli_query($link,'SELECT*FROM board');
         $messages = mysqli_fetch_all($result);
@@ -24,8 +24,8 @@ return function (App $app) {
         return $response;
     });
 
-    $app->post('/api', function (Request $request, Response $response) {
-        $params = $request->getQueryParams();
+    $app->post('/api/page', function (Request $request, Response $response) {
+        $params = $request->getParsedBody();
 
         $link = mysqli_connect("localhost","root","","bulletin-board");
         $stmt = mysqli_prepare($link,"INSERT INTO board(name,messages) VALUES(?,?)");
@@ -38,8 +38,8 @@ return function (App $app) {
         return $response;
     });
 
-    $app->put('/api', function (Request $request, Response $response) {
-        $params = $request->getQueryParams();
+    $app->post('/api/page/put', function (Request $request, Response $response) {
+        $params = $request->getParsedBody();
 
         $link = mysqli_connect("localhost","root","","bulletin-board");
         $stmt = mysqli_prepare($link,"UPDATE board set name = ?, messages = ? where id = ?");
@@ -52,8 +52,8 @@ return function (App $app) {
         return $response;
     });
 
-    $app->delete('/api', function (Request $request, Response $response) {
-        $params = $request->getQueryParams();
+    $app->post('/api/page/delete', function (Request $request, Response $response) {
+        $params = $request->getParsedBody();
 
         $link = mysqli_connect("localhost","root","","bulletin-board");
         $stmt = mysqli_prepare($link,"DELETE FROM board WHERE id = ?");

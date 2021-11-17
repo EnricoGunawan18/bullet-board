@@ -1,3 +1,7 @@
+html{
+    background-color: yellow;
+}
+
 .bulletin{
     display: inline-block;
 }
@@ -32,20 +36,45 @@
 }
 
 .post{
+    background-color: turquoise;
     margin-left: 120px;
     margin-top: 10px;
     width: 100px;
     height: 30px;
 }
 
-.box{
-    padding-top: 20px;
+.post:active{
+    background-color: teal;
+}
+
+.card{
+    padding-top: 10px;
     padding-right: 10px;
     padding-left: 10px;
-    margin: auto;
+    margin-bottom: 20px;
     border: 1px solid black;
     width: 50%;
     display: flex;
     justify-content: space-between;
 }
 
+.left{
+    background-color: yellow;
+    border: 0;
+    width: 60%;
+}
+
+.right{
+    width: 30%;
+}
+
+.button{
+    
+}
+
+.rightbottom{
+    background-color: yellow;
+    border: 0;
+    width: 50%;
+    font-weight: bold;
+}

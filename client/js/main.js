@@ -1,25 +1,64 @@
-var script = document.createElement('script');
-script.src = 'https://code.jquery.com/jquery-3.6.0.min.js';
-script.type = 'text/javascript';
-document.getElementsByTagName('head')[0].appendChild(script);
+const url = 'http://localhost:8080/api/page';
+
+function format(id, title, message) {
+    let card = '';
+    card += '<li id="post-' + id + '" class="card">';
+    card += '<textarea class="left" id = "message' + id + '">' + message + '</textarea>';
+    card += '<div class="right"><div class="button"><button class="edit" onclick="edit(' + id +')">編集</button><button class="delete" onclick="erase(' + id + ')">削除</button></div><textarea class="rightbottom" id = "name' + id + '">' + title + '</textarea></div>'
+    card += '</li>';
+    return card;
+}
+
+$.ajax({
+    type: 'GET',
+    url: url
+}).done(function(data){
+    data = JSON.parse(data)
+    data.forEach(function(post) {
+        $('#list').append(format(post[0], post[1], post[2]));
+    });
+});
+
+
 
 function post(){
-    //var xhr = new XMLHttpRequest();
-    //var url = 'http://localhost:8080/api';
-    var name = document.getElementById('name1').value;
-    var message = document.getElementById('message1').value;
+    let title = $('#name1').val();
+    let message = $('#message1').val();
 
-    //xhr.open("POST",url);
-
-    //var data = {name:name,messages:message};
-    //data.send();
-
-    xhr.send(data);
-    alert(name);
+    $.ajax({
+        type: 'POST',
+        url: url,
+        data: {
+            "name": title,
+            "messages": message
+        }
+    }).done(function(data){
+        window.location.reload();
+    });
 }
-function edit(){
-    alert("edit");
+function edit($id){
+    $.ajax({
+        type: 'POST',
+        url : 'http://localhost:8080/api/page/put', 
+        data: {
+            "id" : $id,
+            "name" : $('#name' + $id).val(),
+            "messages" : $('#message' + $id).val()
+        }
+    }).done(function(data){
+         alert("edit");
+         window.location.reload();
+     });
 }
-function erase(){
-    alert("delete");
+function erase($id){
+
+ $.ajax({
+     url : 'http://localhost:8080/api/page/delete', 
+     type : 'POST',
+     data : {
+         "id" : $id
+     }
+    }).done(function(data){
+        window.location.reload();
+    });
 }
