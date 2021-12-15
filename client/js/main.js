@@ -46,7 +46,6 @@ function edit($id){
             "messages" : $('#message' + $id).val()
         }
     }).done(function(data){
-         alert("edit");
          window.location.reload();
      });
 }
